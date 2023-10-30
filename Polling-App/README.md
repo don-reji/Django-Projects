@@ -17,7 +17,7 @@ The Django Polling App is a web application built with Django, allowing users to
 1. **Installation**: Clone the repository and install the required dependencies.
 
    ```bash
-   git clone https://github.com/your-username/django-polling-app.git
+   git clone https://github.com/don-reji/Django-Projects.git
    ```
    ```bash
    cd Polling-App
