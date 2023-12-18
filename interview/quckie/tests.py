@@ -11,4 +11,7 @@ class TaskAPITest(APITestCase):
     def test_list_view(self):
         response = self.client.get('/tasks/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        
+        if response.status_code==status.HTTP_404_NOT_FOUND:
+            print('not found')
     
