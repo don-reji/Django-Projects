@@ -50,19 +50,6 @@ class Tasks(models.Model):
         # tasks as incomplete
         self.update_parent_completed_status()
 
-        # Reload the instance from db to ensure it has an id (which is needed for adding )
-        # dependency, this also makes the instance in-memory
-        # self.refresh_from_db()
-
-    # not needed
-    # def add_dependency(self, dependency_task):
-    #     if self.pk is not None:
-    #         self.dependency.add(dependency_task)
-    #     else:
-    #         # Handle the case where the instance hasn't been saved yet
-    #         raise ValueError("Cannot add dependencies to an unsaved instance. Save the instance first.")
-
-
     # changes parent's tasks to incomplete if child task is incomplete 
     def update_parent_completed_status(self):
         # If this task has any parent, update their completed status
