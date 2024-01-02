@@ -1,12 +1,15 @@
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from .google_calender import sync_with_google_calendar
 
 # Create your models here.
 class Tasks(models.Model):
     title=models.CharField(max_length=255)
     description=models.TextField(null=True, blank=True)
-    due_date=models.DateField()
+    start_date=models.DateTimeField(auto_now_add=True)
+    due_date=models.DateTimeField()
+    google_calendar_id = models.CharField(max_length=255, blank=True, null=True)
     completed=models.BooleanField(default=False)
     dependency=models.ManyToManyField('self',symmetrical=False,blank=True)
     # can have multiple relationships with same model instances
@@ -22,7 +25,7 @@ class Tasks(models.Model):
         # calling super of parent class so that the normal validations happen
         # and then adding our custom validation on top of it
 
-        if self.due_date and self.due_date<=timezone.now().date():
+        if self.due_date and self.due_date<=timezone.now():
             raise ValidationError('Due date must be in the future.')
         # checking if due_date is in the future
         
@@ -49,6 +52,11 @@ class Tasks(models.Model):
         # if this task has parent tasks and if this task is incomplete then set parent 
         # tasks as incomplete
         self.update_parent_completed_status()
+
+        task=self
+        # adding/ updating task to google calendar
+        sync_with_google_calendar(task)
+        
 
     # changes parent's tasks to incomplete if child task is incomplete 
     def update_parent_completed_status(self):

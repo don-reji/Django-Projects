@@ -2,6 +2,7 @@ from .models import Tasks
 from .serializers import TaskSerializer
 from rest_framework import generics
 from rest_framework.response import Response
+from .google_calender import delete_event
 
 # Create your views here.
 class TasksListView(generics.ListCreateAPIView):
@@ -39,3 +40,10 @@ class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
         # all() returns True if all elements of the provided iterable are True
         # so if all dependency instances,completed =true then all() returns true else False
         return dependencies_completed
+    
+    def delete(self, request, *args, **kwargs):
+        task = self.get_object()
+        event_id = task.google_calendar_id
+        # deletes task from google calendar
+        delete_event(event_id)
+        return super().delete(request, *args, **kwargs)
