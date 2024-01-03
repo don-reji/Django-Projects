@@ -9,12 +9,10 @@ class Task(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     completed = models.BooleanField(default=False)
-    due_date = models.DateField(default=timezone.now()+timedelta(minutes=1),
-    # default at least 1 minute into the future
-    validators=[MinValueValidator(limit_value=timezone.now()+timedelta(minutes=1))],
-    # ensuring Minimum datetime field to 1 minute into the future 
+    due_date = models.DateField(default=timezone.now(),
+    validators=[MinValueValidator(limit_value=timezone.now())],
+
         ) 
 
     def __str__(self):
-        return self.title
-
+        return self.title 
