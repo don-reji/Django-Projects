@@ -1,6 +1,10 @@
+*.env
+*.sqlite3
 venv/
 todo_list/
 tutorial/
 interview/
 TasksAPI/token.json
 TasksAPI/tasks/credentials.json
+.vscode/
+Solution.py
