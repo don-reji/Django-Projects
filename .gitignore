@@ -1,0 +1,8 @@
+*.env
+*.sqlite3
+venv/
+interview/
+todo_list/
+tutorial/
+TasksApp/tasks/credentials.json
+TasksApp/token.json
